@@ -5,6 +5,9 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from Warseeker.commands.admin.command import AdminCommands
 from Warseeker.commands.force_link.command import force_link
+from Warseeker.commands.link.command import link
+from Warseeker.commands.ping_war.view import war_ping_view
+
 
 
 intents = discord.Intents.all()
@@ -38,6 +41,8 @@ async def on_command_error(ctx,error):
 async def setup(bot:commands.bot):
    await bot.add_cog(AdminCommands(bot),guild=discord.Object(id=GUILD_ID))
    await bot.add_cog(force_link(bot),guild=discord.Object(id=GUILD_ID))
+   await bot.add_cog(link(bot),guild=discord.Object(id=GUILD_ID))
+   await bot.add_cog(war_ping_view(bot),guild=discord.Object(id=GUILD_ID))
    print("[+] All cogs have been loaded successfully")
 
 asyncio.run(setup(bot))
