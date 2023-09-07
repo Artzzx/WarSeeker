@@ -2,9 +2,13 @@ import discord
 import os
 import asyncio
 from discord.ext import commands
+from dotenv import load_dotenv
+from Warseeker.commands.admin.command import AdminCommands
+from Warseeker.commands.force_link.command import force_link
+
 
 intents = discord.Intents.all()
-
+load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 GUILD_ID = os.getenv("GUILD_ID")
 
@@ -32,8 +36,9 @@ async def on_command_error(ctx,error):
 
 
 async def setup(bot:commands.bot):
-   # await bot.add_cog(Apply(bot),guild=discord.Object(id=GUILD_ID))
-   pass
+   await bot.add_cog(AdminCommands(bot),guild=discord.Object(id=GUILD_ID))
+   await bot.add_cog(force_link(bot),guild=discord.Object(id=GUILD_ID))
+   print("[+] All cogs have been loaded successfully")
 
 asyncio.run(setup(bot))
 bot.run(TOKEN)
